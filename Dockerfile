@@ -39,7 +39,6 @@ RUN set -x \
 	&& sed -ri "s!^(\#\s*)?(elasticsearch\.url:).*!\2 'http://elasticsearch:9200'!" /etc/kibana/kibana.yml \
 	&& grep -q "^elasticsearch\.url: 'http://elasticsearch:9200'\$" /etc/kibana/kibana.yml
 ENV PATH /usr/share/kibana/bin:$PATH
-RUN kibana-plugin install https://github.com/wtakase/kibana-own-home/releases/download/v5.3.0-2/own_home-5.3.0-2.zip
 RUN kibana-plugin install https://github.com/sivasamyk/logtrail/releases/download/0.1.11/logtrail-5.3.0-0.1.11.zip
 CMD ["kibana"]
 COPY opt/qnib/entry/* /opt/qnib/entry/
