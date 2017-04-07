@@ -37,4 +37,3 @@ services:
         delay: 15s
     environment:
         ES_MASTER_HOST: kibana_backend
-    command: wait.sh

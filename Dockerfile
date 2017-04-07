@@ -40,5 +40,10 @@ RUN set -x \
 	&& grep -q "^elasticsearch\.url: 'http://elasticsearch:9200'\$" /etc/kibana/kibana.yml
 ENV PATH /usr/share/kibana/bin:$PATH
 RUN kibana-plugin install https://github.com/sivasamyk/logtrail/releases/download/0.1.11/logtrail-5.3.0-0.1.11.zip
+RUN apt-get update \
+ && apt-get install -y curl \
+ && rm -rf /var/lib/apt/lists/*
+HEALTHCHECK --interval=2s --retries=300 --timeout=1s \
+  CMD curl -sI http://localhost:5601/status
 CMD ["kibana"]
 COPY opt/qnib/entry/* /opt/qnib/entry/
