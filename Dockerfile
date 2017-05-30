@@ -24,7 +24,7 @@ RUN set -ex; \
 # https://www.elastic.co/guide/en/kibana/5.0/deb.html
 RUN echo 'deb https://artifacts.elastic.co/packages/5.x/apt stable main' > /etc/apt/sources.list.d/kibana.list
 
-ENV KIBANA_VERSION 5.3.0
+ENV KIBANA_VERSION 5.4.0
 
 RUN set -x \
 	&& apt-get update \
@@ -40,7 +40,8 @@ RUN set -x \
 	&& grep -q "^elasticsearch\.url: 'http://elasticsearch:9200'\$" /etc/kibana/kibana.yml
 ENV PATH=/usr/share/kibana/bin:$PATH \
     ENTRYPOINTS_DIR=/opt/qnib/entry
-RUN kibana-plugin install https://github.com/sivasamyk/logtrail/releases/download/0.1.11/logtrail-5.3.0-0.1.11.zip
+ARG LOGTRAIL_VER=0.1.13
+RUN kibana-plugin install https://github.com/sivasamyk/logtrail/releases/download/${LOGTRAIL_VER}/logtrail-${KIBANA_VERSION}-${LOGTRAIL_VER}.zip
 RUN apt-get update \
  && apt-get install -y curl \
  && rm -rf /var/lib/apt/lists/*
